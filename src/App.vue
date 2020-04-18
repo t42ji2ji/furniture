@@ -2,8 +2,8 @@
   div(id="app")
     div(id="nav")
       .logo
-        img(src="./assets/Bitmap.png")
-        h3 羅特利磁磚精品
+        img(src="./assets/logoDesign.png")
+        h3(contenteditable="true") 地板精品
       .navbar
         router-link(to="/") 關於公司
         router-link(to="/news") 最新消息
@@ -36,8 +36,9 @@
   display: flex;
   align-items: center;
   img {
-    width: 63px;
-    height: 32px;
+    margin-right: 10px;
+    height: 29px;
+    object-fit: cover;
   }
   h3 {
     margin: 0;
@@ -51,12 +52,16 @@
   padding: 20px 30px;
   justify-content: space-between;
   box-sizing: border-box;
+  .navbar {
+    display: flex;
+    box-sizing: border-box;
+  }
   a {
     font-weight: bold;
     color: #2c3e50;
     text-decoration: none;
     padding: 5px;
-    margin-left: 54px;
+    margin-left: 30px;
     &.router-link-exact-active {
       color: #42b983;
     }

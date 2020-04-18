@@ -19,7 +19,10 @@
                 .cover {{index}}
 
 
-    .demo(:style="{backgroundImage: 'url('+ require(`../assets/floor_example/image${choosenTexture}.jpeg`) +')'}")
+    //- .demo(:style="{backgroundImage: 'url('+ require(`@/assets/floor_example/image${choosenTexture}.jpeg`) +')'}")
+    VueCompareImage(:leftImage="choosenTexture.toString()" :rightImage="(choosenTexture + 1).toString()")
+
+
       
 
 </template>
@@ -27,11 +30,13 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
+import VueCompareImage from "../components/VueCompareImage";
 
 export default {
   name: "Home",
   components: {
     HelloWorld,
+    VueCompareImage
   },
   computed: {
     isActive(index) {
@@ -40,7 +45,7 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   mounted() {
     window.onresize = () => {
@@ -69,7 +74,7 @@ export default {
       } else {
         tg.style.WebkitTransform = `translateX(-${tg.clientWidth / 2}px)`;
       }
-    },
+    }
   },
   data() {
     return {
@@ -80,7 +85,7 @@ export default {
       catlogs: [
         {
           item: "大理石紋",
-          detail: ["米瑞雲石", "亞卡拉石", "星苑", "琥珀石", "多倫石", "帕斯"],
+          detail: ["米瑞雲石", "亞卡拉石", "星苑", "琥珀石", "多倫石", "帕斯"]
         },
         {
           item: "石紋地、壁磚",
@@ -91,8 +96,8 @@ export default {
             "哈比",
             "里亞托",
             "拉爾",
-            "泰拉",
-          ],
+            "泰拉"
+          ]
         },
         {
           item: "木紋磚",
@@ -105,8 +110,8 @@ export default {
             "格拉夫",
             "杉木",
             "西西里",
-            "格拉夫",
-          ],
+            "格拉夫"
+          ]
         },
         { item: "金屬磚", detail: ["米瑞格羅石", "堤坦", "芝加哥"] },
         {
@@ -120,17 +125,17 @@ export default {
             "尼斯",
             "摩洛哥",
             "底特律",
-            "赫曼",
-          ],
+            "赫曼"
+          ]
         },
         {
           item: "戶外厚磚",
-          detail: ["磐石", "卡多索厚磚", "波爾", "巴賽隆納"],
+          detail: ["磐石", "卡多索厚磚", "波爾", "巴賽隆納"]
         },
-        { item: "外牆磚", detail: ["德國射出磚", "日本小澤琉璃釉馬賽克"] },
-      ],
+        { item: "外牆磚", detail: ["德國射出磚", "日本小澤琉璃釉馬賽克"] }
+      ]
     };
-  },
+  }
 };
 </script>
 
@@ -223,7 +228,7 @@ export default {
     width: 50%;
     height: 150px;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 5px;
     .active {
       border: 3px solid rgba(255, 28, 28, 0.486);
     }

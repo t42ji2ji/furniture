@@ -13,6 +13,7 @@
     "pug-filters": "^3.1.1",
     "pug-plain-loader": "^1.0.0",
     "vue": "^2.6.11",
+    "vue-compare-image": "^0.2.0",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"
   },
