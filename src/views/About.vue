@@ -1,5 +1,9 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+<template lang="pug">
+  .about
 </template>
+
+<style lang="scss" scoped>
+.three {
+  height: 90vh;
+}
+</style>

@@ -9,8 +9,8 @@
         router-link(to="/news") 最新消息
         router-link(to="/product") 產品資訊
         router-link(to="/case") 實績案例
-        router-link(to="/store") 門市位置
-        router-link(to="/three") 聯絡我們
+        router-link(to="/aFrame") 360觀看
+        router-link(to="/three") 3d模型
         router-link(to="/nav") 目錄下載
     router-view
 </template>

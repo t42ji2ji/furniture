@@ -20,7 +20,7 @@
 
 
     //- .demo(:style="{backgroundImage: 'url('+ require(`@/assets/floor_example/image${choosenTexture}.jpeg`) +')'}")
-    VueCompareImage(:leftImage="choosenTexture.toString()" :rightImage="(choosenTexture + 1).toString()")
+    VueCompareImage(:leftImage="choosenTexture[0].toString()" :rightImage="choosenTexture[1].toString()")
 
 
       
@@ -31,37 +31,47 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import VueCompareImage from "../components/VueCompareImage";
+import gsap from "gsap";
 
 export default {
   name: "Home",
   components: {
     HelloWorld,
-    VueCompareImage
-  },
-  computed: {
-    isActive(index) {
-      if (index == this.choosenTexture) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    VueCompareImage,
   },
   mounted() {
     window.onresize = () => {
       this.moveTotexture(-1);
     };
+    this.textureTimeLine = new gsap.timeline();
+    this.textureTimeLine.from(".texture", 0.3, {
+      duration: 0.1,
+      y: -20,
+      opacity: 0,
+      stagger: 0.2,
+      scale: 0.2,
+    });
   },
   methods: {
     choosenTextureStyle(index) {
-      if (index == this.choosenTexture) {
+      if (this.choosenTexture.includes(index)) {
         return true;
       } else {
         return false;
       }
     },
     clickTexture(index) {
-      this.choosenTexture = index;
+      console.log(index);
+      if (this.choosenTextureStyle(index)) {
+        return;
+      }
+      if (this.updateFlag) {
+        this.choosenTexture.splice(0, 2, ...[this.choosenTexture[0], index]);
+        this.updateFlag = !this.updateFlag;
+      } else {
+        this.choosenTexture.splice(0, 2, ...[index, this.choosenTexture[1]]);
+        this.updateFlag = !this.updateFlag;
+      }
     },
     clickItem(index) {
       console.log(index);
@@ -72,20 +82,23 @@ export default {
       if (dis == -1) {
         tg.style.WebkitTransform = `translateX(0px)`;
       } else {
+        this.textureTimeLine.restart();
         tg.style.WebkitTransform = `translateX(-${tg.clientWidth / 2}px)`;
       }
-    }
+    },
   },
   data() {
     return {
+      textureTimeLine: "",
       search: "",
       itemOpen: 0,
-      choosenTexture: 0,
+      choosenTexture: [0, 1],
+      updateFlag: true,
       texture: [0, 1, 2, 3, 4, 5, 6],
       catlogs: [
         {
           item: "大理石紋",
-          detail: ["米瑞雲石", "亞卡拉石", "星苑", "琥珀石", "多倫石", "帕斯"]
+          detail: ["米瑞雲石", "亞卡拉石", "星苑", "琥珀石", "多倫石", "帕斯"],
         },
         {
           item: "石紋地、壁磚",
@@ -96,8 +109,8 @@ export default {
             "哈比",
             "里亞托",
             "拉爾",
-            "泰拉"
-          ]
+            "泰拉",
+          ],
         },
         {
           item: "木紋磚",
@@ -110,8 +123,8 @@ export default {
             "格拉夫",
             "杉木",
             "西西里",
-            "格拉夫"
-          ]
+            "格拉夫",
+          ],
         },
         { item: "金屬磚", detail: ["米瑞格羅石", "堤坦", "芝加哥"] },
         {
@@ -125,17 +138,17 @@ export default {
             "尼斯",
             "摩洛哥",
             "底特律",
-            "赫曼"
-          ]
+            "赫曼",
+          ],
         },
         {
           item: "戶外厚磚",
-          detail: ["磐石", "卡多索厚磚", "波爾", "巴賽隆納"]
+          detail: ["磐石", "卡多索厚磚", "波爾", "巴賽隆納"],
         },
-        { item: "外牆磚", detail: ["德國射出磚", "日本小澤琉璃釉馬賽克"] }
-      ]
+        { item: "外牆磚", detail: ["德國射出磚", "日本小澤琉璃釉馬賽克"] },
+      ],
     };
-  }
+  },
 };
 </script>
 
