@@ -25,10 +25,10 @@
 
 <script>
 // @ is an alias to /src
-import * as THREE from "aframe";
+import * as THREE from 'aframe';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {},
   mounted() {},
   data() {
@@ -38,7 +38,7 @@ export default {
       geometry: null,
       material: null,
       mesh: null,
-      renderer: null
+      renderer: null,
     };
   },
   methods: {
@@ -71,8 +71,8 @@ export default {
       this.mesh.rotation.y += 0.02;
 
       this.renderer.render(this.scene, this.camera);
-    }
-  }
+    },
+  },
 };
 </script>
 

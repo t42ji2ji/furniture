@@ -12,7 +12,7 @@
           .img(@click="selectTexture(texture)" :class="{ active: choosenTexture(texture)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/texture/${texture}.jpg`) +')'}"  )
       //- .activeBorder(:class="{ active: choosenTextureStyle(texture)}")
   //- .bigImg(v-if="selectedTexture && selectedStyle" :style="{backgroundImage: 'url('+ require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`) +')'}"  )
-  a-scene.sceneStyle(renderer="antialias: true" embedded=true debug=true v-if="selectedTexture && selectedStyle")
+  a-scene.sceneStyle(device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
     a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`)" rotation="0 -90 0")
 </template>
 
@@ -81,10 +81,12 @@ export default {
   methods: {
     selectTexture(texture) {
       this.selectedTexture = texture;
+      this.init();
     },
     selectStyle(style) {
       this.selectedStyle = style;
       this.moveTotexture();
+      this.init();
     },
     choosenTexture(texture) {
       if (this.selectedTexture === texture) {

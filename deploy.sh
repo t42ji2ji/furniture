@@ -9,6 +9,6 @@ git init
 git add -A
 git commit -m 'deploy'
 # 部署到 https://github.com/chou0728/eric-project.git 分支為 gh-pages
-git push -f https://github.com/t42ji2ji/furniture.git master:gh-pages
+git push -f https://github.com/t42ji2ji/furniture.git gh-pages
 cd -
 echo "https://t42ji2ji.github.io/furniture/#"

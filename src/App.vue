@@ -6,7 +6,7 @@ div(id="app")
       h3(contenteditable="true") 精品
     .navbar
       //- router-link(to="/") 關於公司
-      router-link(to="/demo") Demo
+      router-link(to="/demo") 精品Demo
       //- router-link(to="/product") 產品資訊
       //- router-link(to="/case") 實績案例
       //- router-link(to="/aFrame") 360觀看
