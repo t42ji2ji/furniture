@@ -4,10 +4,11 @@ import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/about',
@@ -15,21 +16,35 @@ const routes = [{
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
-  }, {
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/About.vue'),
+  },
+  {
+    path: '/demo',
+    name: 'Demo',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Demo.vue'),
+  },
+  {
     path: '/product',
     name: 'product',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/ProductDemo.vue')
-  }, {
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/ProductDemo.vue'),
+  },
+  {
     path: '/three',
     name: 'three',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/Three.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Three.vue'),
   },
   {
     path: '/aFrame',
@@ -37,7 +52,8 @@ const routes = [{
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/aFrame.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/aFrame.vue'),
   },
   {
     path: '/aos',
@@ -45,12 +61,12 @@ const routes = [{
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/Aos.vue')
-  }
-]
+    component: () => import(/* webpackChunkName: "about" */ '../views/Aos.vue'),
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

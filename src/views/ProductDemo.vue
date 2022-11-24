@@ -1,40 +1,40 @@
 <template lang="pug">
-  .prodoct
-    .drawer
-      .search
-        input(v-model="search")
-        .btn search
-      .catlogs
-        .catlog
-          .catlog-items
-            .item(v-for="(item ,index) in catlogs") 
-              .item-title(@click="clickItem(index)") {{item.item}}
-              transition-group(name="fade")
-                .item-detail(v-for="(detail, dindex) in item.detail" v-if="itemOpen == index", :key="`${index}_${dindex}`" @click="moveTotexture") {{detail}}
-        .catlog
-          .btn(@click="moveTotexture(-1)") back
-          .textureItems
-            .texture(v-for="(tex,index) in texture")
-              .textImg(@click="clickTexture(index)" :class="{ active: choosenTextureStyle(index)}", :style="{backgroundImage: 'url('+ require(`../assets/floor_texture/texture${index}.jpeg`) +')'}")
-                .cover {{index}}
+.prodoct
+  .drawer
+    .search
+      input(v-model="search")
+      .btn search
+    .catlogs
+      .catlog
+        .catlog-items
+          .item(v-for="(item ,index) in catlogs") 
+            .item-title(@click="clickItem(index)") {{item.item}}
+            transition-group(name="fade")
+              .item-detail(v-for="(detail, dindex) in item.detail" v-if="itemOpen == index", :key="`${index}_${dindex}`" @click="moveTotexture") {{detail}}
+      .catlog
+        .btn(@click="moveTotexture(-1)") back
+        .textureItems
+          .texture(v-for="(tex,index) in texture")
+            .textImg(@click="clickTexture(index)" :class="{ active: choosenTextureStyle(index)}", :style="{backgroundImage: 'url('+ require(`../assets/floor_texture/texture${index}.jpeg`) +')'}")
+              .cover {{index}}
 
 
-    //- .demo(:style="{backgroundImage: 'url('+ require(`@/assets/floor_example/image${choosenTexture}.jpeg`) +')'}")
-    VueCompareImage(:leftImage="choosenTexture[0].toString()" :rightImage="choosenTexture[1].toString()")
+  //- .demo(:style="{backgroundImage: 'url('+ require(`@/assets/floor_example/image${choosenTexture}.jpeg`) +')'}")
+  VueCompareImage(:leftImage="choosenTexture[0].toString()" :rightImage="choosenTexture[1].toString()")
 
 
-      
+    
 
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-import VueCompareImage from "../components/VueCompareImage";
-import gsap from "gsap";
+import HelloWorld from '@/components/HelloWorld.vue';
+import VueCompareImage from '../components/VueCompareImage';
+import gsap from 'gsap';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     HelloWorld,
     VueCompareImage,
@@ -44,7 +44,7 @@ export default {
       this.moveTotexture(-1);
     };
     this.textureTimeLine = new gsap.timeline();
-    this.textureTimeLine.from(".texture", 0.3, {
+    this.textureTimeLine.from('.texture', 0.3, {
       duration: 0.1,
       y: -20,
       opacity: 0,
@@ -78,7 +78,7 @@ export default {
       this.itemOpen = index;
     },
     moveTotexture(dis) {
-      var tg = document.querySelector(".catlogs");
+      var tg = document.querySelector('.catlogs');
       if (dis == -1) {
         tg.style.WebkitTransform = `translateX(0px)`;
       } else {
@@ -89,63 +89,63 @@ export default {
   },
   data() {
     return {
-      textureTimeLine: "",
-      search: "",
+      textureTimeLine: '',
+      search: '',
       itemOpen: 0,
       choosenTexture: [0, 1],
       updateFlag: true,
       texture: [0, 1, 2, 3, 4, 5, 6],
       catlogs: [
         {
-          item: "大理石紋",
-          detail: ["米瑞雲石", "亞卡拉石", "星苑", "琥珀石", "多倫石", "帕斯"],
+          item: '大理石紋',
+          detail: ['米瑞雲石', '亞卡拉石', '星苑', '琥珀石', '多倫石', '帕斯'],
         },
         {
-          item: "石紋地、壁磚",
+          item: '石紋地、壁磚',
           detail: [
-            "米瑞格羅石",
-            "米瑞哈伯石",
-            "卡多索",
-            "哈比",
-            "里亞托",
-            "拉爾",
-            "泰拉",
+            '米瑞格羅石',
+            '米瑞哈伯石',
+            '卡多索',
+            '哈比',
+            '里亞托',
+            '拉爾',
+            '泰拉',
           ],
         },
         {
-          item: "木紋磚",
+          item: '木紋磚',
           detail: [
-            "杉木",
-            "西西里",
-            "格拉夫",
-            "杉木",
-            "西西里",
-            "格拉夫",
-            "杉木",
-            "西西里",
-            "格拉夫",
+            '杉木',
+            '西西里',
+            '格拉夫',
+            '杉木',
+            '西西里',
+            '格拉夫',
+            '杉木',
+            '西西里',
+            '格拉夫',
           ],
         },
-        { item: "金屬磚", detail: ["米瑞格羅石", "堤坦", "芝加哥"] },
+        { item: '金屬磚', detail: ['米瑞格羅石', '堤坦', '芝加哥'] },
         {
-          item: "花磚/異形磚",
+          item: '花磚/異形磚',
           detail: [
-            "米爾",
-            "紐約",
-            "巴黎地鐵磚",
-            "蜂巢",
-            "星光",
-            "尼斯",
-            "摩洛哥",
-            "底特律",
-            "赫曼",
+            '米爾',
+            '紐約',
+            '巴黎地鐵磚',
+            '蜂巢',
+            '星光',
+            '尼斯',
+            '摩洛哥',
+            '底特律',
+            '赫曼',
           ],
         },
         {
-          item: "戶外厚磚",
-          detail: ["磐石", "卡多索厚磚", "波爾", "巴賽隆納"],
+          item: '戶外厚磚',
+          detail: ['磐石', '卡多索厚磚', '波爾', '巴賽隆納'],
         },
-        { item: "外牆磚", detail: ["德國射出磚", "日本小澤琉璃釉馬賽克"] },
+        { item: '外牆磚', detail: ['德國射出磚', '日本小澤琉璃釉馬賽克'] },
       ],
     };
   },
@@ -162,7 +162,7 @@ export default {
   .demo {
     width: 100%;
     height: 100%;
-    background-image: url("../assets/floor_example/image0.jpeg");
+    background-image: url('../assets/floor_example/image0.jpeg');
     background-position: center center;
     border-radius: 10px;
     box-shadow: 10px 10px 12px #24242466;
@@ -249,7 +249,7 @@ export default {
       cursor: pointer;
       width: 100%;
       height: 100%;
-      background-image: url("../assets/floor_texture/texture0.jpeg");
+      background-image: url('../assets/floor_texture/texture0.jpeg');
       border-radius: 5px;
       box-shadow: 6px 8px 12px rgb(202, 202, 202);
       position: relative;

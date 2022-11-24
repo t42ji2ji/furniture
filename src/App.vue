@@ -1,18 +1,18 @@
 <template lang="pug">
-  div(id="app")
-    div(id="nav")
-      .logo
-        img(src="./assets/logoDesign.png")
-        h3(contenteditable="true") 地板精品
-      .navbar
-        router-link(to="/") 關於公司
-        router-link(to="/news") 最新消息
-        router-link(to="/product") 產品資訊
-        router-link(to="/case") 實績案例
-        router-link(to="/aFrame") 360觀看
-        router-link(to="/three") 3d模型
-        router-link(to="/nav") 目錄下載
-    router-view
+div(id="app")
+  div(id="nav")
+    .logo
+      img(src="./assets/logoDesign.png")
+      h3(contenteditable="true") 精品
+    .navbar
+      //- router-link(to="/") 關於公司
+      router-link(to="/demo") Demo
+      //- router-link(to="/product") 產品資訊
+      //- router-link(to="/case") 實績案例
+      //- router-link(to="/aFrame") 360觀看
+      //- router-link(to="/three") 3d模型
+      //- router-link(to="/nav") 目錄下載
+  router-view
 </template>
 
 <style lang="scss">

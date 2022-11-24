@@ -1,36 +1,36 @@
 <template lang="pug">
-  .home
-    .texts
-      .title 地板精品
-      .subtitle 跟你接觸最親密的家具
-    .showcase
-      .show(v-for="x in showdata" :style="{backgroundImage: 'url(' + x + ')'}")
+.home
+  .texts
+    .title 地板精品
+    .subtitle 跟你接觸最親密的家具
+  .showcase
+    .show(v-for="x in showdata" :style="{backgroundImage: 'url(' + x + ')'}")
 
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-import { gsap } from "gsap";
+import HelloWorld from '@/components/HelloWorld.vue';
+import { gsap } from 'gsap';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    HelloWorld
+    HelloWorld,
   },
   data() {
     return {
       showdata: [
-        "https://images.unsplash.com/photo-1567101692882-6630684230bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1550921082-c282cdc432d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1583700852632-570667e5fa52?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-      ]
+        'https://images.unsplash.com/photo-1567101692882-6630684230bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+        'https://images.unsplash.com/photo-1550921082-c282cdc432d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+        'https://images.unsplash.com/photo-1583700852632-570667e5fa52?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+      ],
     };
   },
   mounted() {
-    gsap.from(".show", 1, { y: -40, opacity: 0, stagger: 0.2 });
+    gsap.from('.show', 1, { y: -40, opacity: 0, stagger: 0.2 });
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
@@ -61,7 +61,7 @@ export default {
     position: relative;
     overflow: hidden;
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 0;
@@ -73,7 +73,7 @@ export default {
     }
     &:hover {
       &::after {
-        content: "";
+        content: '';
         background-color: black;
         opacity: 20%;
       }
