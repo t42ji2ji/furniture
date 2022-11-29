@@ -1,19 +1,26 @@
 <template lang="pug">
 .demoPage
-  .outer(style="width: 20vw; position:relative; overflow: hidden;")
+  .outer(style="")
+    .tabs
+      .tab(@click="selectStyleTab('style')"  :class="{ activeTab: selectedStyleTab == 'style'}") 版型
+      .tab(@click="selectStyleTab('texture')"  :class="{ activeTab: selectedStyleTab == 'texture'}") 色號
     .drawer
       .grid
         .textImg(v-for="style in styles")
-          .img(@click="selectStyle(style)" :class="{ active: choosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.jpg`) +')'}"  )
+          .img(@click="selectStyle(style)" :class="{ active: choosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.jpg`) +')'}")
+          .text {{style}}
+      .w(style="width:10px")
       .grid.gridRight
-        .back(@click="moveTotexture(-1)" style="display:flex; justify-content: center; align-items: center; cursor: pointer;") 
-          .backText 返回
         .textImg(v-for="texture in textures")
           .img(@click="selectTexture(texture)" :class="{ active: choosenTexture(texture)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/texture/${texture}.jpg`) +')'}"  )
+          .text {{texture}}
       //- .activeBorder(:class="{ active: choosenTextureStyle(texture)}")
   //- .bigImg(v-if="selectedTexture && selectedStyle" :style="{backgroundImage: 'url('+ require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`) +')'}"  )
   a-scene.sceneStyle(device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
     a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`)" rotation="0 -90 0")
+    .monitor 
+      .text 色號：{{selectedStyle}}
+      .text 版型：{{selectedTexture}}
 </template>
 
 <script>
@@ -23,28 +30,37 @@ export default {
   name: 'Demo',
   data() {
     return {
-      selectedTexture: '',
-      selectedStyle: '',
+      selectedTexture: 'U10',
+      selectedStyle: 'W',
+      selectedStyleTab: 'style',
       styles: [
+        'F',
         'F-1',
         'F-2',
         'F-4',
-        'F',
+        'H',
         'H-1',
         'H-2',
-        'H',
-        'M7',
-        'M8',
         'U1',
         'U2',
         'U3',
         'U4',
         'U5',
+        'M7',
+        'M8',
         'W',
-        'X6-1',
         'X6',
+        'X6-1',
       ],
       textures: [
+        'U10',
+        'U20',
+        'U30',
+        'U40',
+        'U50',
+        'U60',
+        'U70',
+        'U80',
         'K01',
         'K02',
         'K03',
@@ -54,14 +70,6 @@ export default {
         'K07',
         'K08',
         'K09',
-        'U10',
-        'U20',
-        'U30',
-        'U40',
-        'U50',
-        'U60',
-        'U70',
-        'U80',
         'Y15',
         'Y35',
         'Y45',
@@ -79,13 +87,20 @@ export default {
     },
   },
   methods: {
+    selectStyleTab(tabName) {
+      this.selectedStyleTab = tabName;
+      if (tabName == 'texture') {
+        this.moveTotexture();
+      } else {
+        this.moveTotexture(-1);
+      }
+    },
     selectTexture(texture) {
       this.selectedTexture = texture;
       this.init();
     },
     selectStyle(style) {
       this.selectedStyle = style;
-      this.moveTotexture();
       this.init();
     },
     choosenTexture(texture) {
@@ -148,11 +163,27 @@ export default {
 canvas {
   border-radius: 10px;
 }
+
+.tabs {
+  display: flex;
+  width: 100%;
+  .tab {
+    width: 50%;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    &.activeTab {
+      border: 1px solid rgb(156, 156, 156);
+      border-radius: 5px;
+      background-color: #f5f5f5;
+    }
+  }
+}
+
 .sceneStyle {
   margin: 10px;
   box-sizing: border-box;
   border-radius: 10px;
-  max-width: 90%;
 }
 .demoPage {
   height: 90vh;
@@ -164,30 +195,37 @@ canvas {
 
 .textImg {
   width: 100%;
-  aspect-ratio: 1/1;
   position: relative;
   cursor: pointer;
 }
 .img {
   box-sizing: border-box;
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 2/3;
   background-size: cover;
   background-position: center;
   border-radius: 5px;
   position: relative;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.268);
 }
 
 .active {
   pointer-events: none;
   margin: 1px;
-  position: absolute;
   border: 3px solid rgba(255, 28, 28, 0.821);
-  z-index: 100;
+}
+.outer {
+  display: flex;
+  flex-direction: column;
+  min-width: 15vw;
+  max-width: 150px;
+  position: relative;
+  overflow-x: hidden;
 }
 .drawer {
   display: flex;
   width: 200%;
+  height: 100%;
   overflow: hidden;
   transition: 0.5s;
   margin: 10px 0px;
@@ -198,11 +236,22 @@ canvas {
 .grid {
   width: 100%;
   display: grid;
-  height: min-content;
-  max-height: 80vh;
-  grid-template-columns: 1fr 1fr 1fr;
+  height: max-content;
+  max-height: 100%;
+  grid-template-columns: 1fr 1fr;
   box-sizing: border-box;
   overflow-y: scroll;
   gap: 0.5rem;
+}
+
+.monitor {
+  position: absolute;
+  text-align: left;
+  font-size: 0.8rem;
+  top: 0;
+  left: 0;
+  background-color: #aeaeae6d;
+  z-index: 100;
+  padding: 0.5rem;
 }
 </style>

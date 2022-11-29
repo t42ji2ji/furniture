@@ -8,6 +8,7 @@ cd dist
 git init 
 git add -A
 git commit -m 'deploy'
+git checkout -b gh-pages
 # 部署到 https://github.com/chou0728/eric-project.git 分支為 gh-pages
 git push -f https://github.com/t42ji2ji/furniture.git gh-pages
 cd -
