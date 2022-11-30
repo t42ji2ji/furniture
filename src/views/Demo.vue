@@ -2,6 +2,10 @@
 .demoPage
   .outer(style="")
     .tabs
+      .tab(:class="{ activeColor: selectedRoom == '臥室'}") 臥室
+      .tab(style="opacity:0.3" :class="{ activeColor: selectedRoom == '客廳'}") 客廳
+      .tab(style="opacity:0.3" :class="{ activeColor: selectedRoom == '廚房'}") 廚房
+    .tabs
       .tab(@click="selectStyleTab('style')"  :class="{ activeTab: selectedStyleTab == 'style'}") 版型
       .tab(@click="selectStyleTab('texture')"  :class="{ activeTab: selectedStyleTab == 'texture'}") 色號
     .drawer
@@ -36,6 +40,7 @@ export default {
       selectedTexture: 'U10',
       selectedStyle: 'W',
       selectedStyleTab: 'style',
+      selectedRoom: '臥室',
       test: '',
       styles: [
         'F',
@@ -799,6 +804,8 @@ canvas {
       border: 1px solid rgb(156, 156, 156);
       border-radius: 5px;
       background-color: #f5f5f5;
+    }
+    &.activeColor {
     }
   }
 }
