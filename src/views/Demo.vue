@@ -101,7 +101,6 @@ export default {
     THREEJ;
     const AFRAME = window.AFRAME;
     const THREE = window.THREE;
-    console.log(AFRAME);
     var vm = this;
 
     window.addEventListener('wheel', (event) => {
@@ -472,7 +471,6 @@ export default {
         // Calculate rotation.
         direction = this.data.reverseMouseDrag ? 1 : -1;
 
-        console.log('y', yawObject.rotation.y);
         if (yawObject.rotation.y + movementX * 0.002 * direction < -0.5) {
           yawObject.rotation.y = -0.5;
         } else if (yawObject.rotation.y + movementX * 0.002 * direction > 0.5) {
@@ -584,7 +582,6 @@ export default {
         deltaX =
           (2 * Math.PI * (evt.touches[0].pageY - this.touchStart.y)) /
           canvas.clientHeight;
-        console.log('deltaX:', deltaX);
 
         direction = this.data.reverseTouchDrag ? 1 : -1;
         // Limit touch orientaion to to yaw (y axis).
