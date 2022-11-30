@@ -16,6 +16,11 @@ div(id="app")
 </template>
 
 <style lang="scss">
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

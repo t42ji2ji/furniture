@@ -20,14 +20,14 @@
           .text {{texture}}
       //- .activeBorder(:class="{ active: choosenTextureStyle(texture)}")
   //- .bigImg(v-if="selectedTexture && selectedStyle" :style="{backgroundImage: 'url('+ require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`) +')'}"  )
-  a-scene.sceneStyle(device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
+  a-scene.sceneStyle(@mouseenter="inScene = true"
+    @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
     a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
     a-entity(id="rig" position="25 10 0" rotation="0 90 0")
-      a-entity( id="camera" camera look-controls-o)
+      a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o)
     .monitor 
       .text 版型：{{selectedStyle}}
       .text 色號：{{selectedTexture}}
-      //- .text Rotate{{test}}
 </template>
 
 <script>
@@ -38,7 +38,9 @@ export default {
   data() {
     return {
       selectedTexture: 'U10',
+      inScene: false,
       selectedStyle: 'W',
+      zoom: 1,
       selectedStyleTab: 'style',
       selectedRoom: '臥室',
       test: '',
@@ -101,6 +103,20 @@ export default {
     const THREE = window.THREE;
     console.log(AFRAME);
     var vm = this;
+
+    window.addEventListener('wheel', (event) => {
+      // small increments for smoother zooming
+      if (!vm.inScene) {
+        return;
+      }
+      const delta = event.wheelDelta / 120 / 10;
+      var finalZoom = vm.zoom + delta;
+
+      // limiting the zoom
+      if (finalZoom < 0.5) finalZoom = 0.5;
+      if (finalZoom > 2) finalZoom = 2;
+      this.zoom = finalZoom;
+    });
 
     function bind(fn, ctx /* , arg1, arg2 */) {
       return (function(prependedArgs) {
