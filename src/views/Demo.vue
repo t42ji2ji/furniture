@@ -24,7 +24,7 @@
     @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
     a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
     a-entity(id="rig" position="25 10 0" rotation="0 90 0")
-      a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o)
+      a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
     .monitor 
       .text 版型：{{selectedStyle}}
       .text 色號：{{selectedTexture}}
@@ -104,11 +104,11 @@ export default {
     var vm = this;
 
     window.addEventListener('wheel', (event) => {
-      // small increments for smoother zooming
       if (!vm.inScene) {
         return;
       }
-      const delta = event.wheelDelta / 120 / 10;
+      // small increments for smoother zooming
+      const delta = event.wheelDelta / 120 / 20;
       var finalZoom = vm.zoom + delta;
 
       // limiting the zoom
