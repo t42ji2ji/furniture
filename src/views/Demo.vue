@@ -21,8 +21,8 @@
     a-entity(id="rig" position="25 10 0" rotation="0 90 0")
       a-entity( id="camera" camera look-controls-o)
     .monitor 
-      .text 色號：{{selectedStyle}}
-      .text 版型：{{selectedTexture}}
+      .text 版型：{{selectedStyle}}
+      .text 色號：{{selectedTexture}}
       //- .text Rotate{{test}}
 </template>
 
