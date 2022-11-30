@@ -96,31 +96,6 @@ export default {
     const THREE = window.THREE;
     console.log(AFRAME);
     var vm = this;
-    AFRAME.registerComponent('rotation-reader', {
-      tick: function() {
-        // `this.el` is the element.
-        // `object3D` is the three.js object.
-        // console.log(this.el.object3D);
-
-        // `rotation` is a three.js Euler using radians. `quaternion` also available.
-        // console.log('x1 ', this.el.object3D.rotation.x);
-        console.log('y', this.el.object3D.rotation.y);
-        if (this.el.object3D.rotation.y < -0.36) {
-          this.el.object3D.rotation.y = -0.4;
-        } else if (this.el.object3D.rotation.y > 0.2) {
-          this.el.object3D.rotation.y = 0.18;
-        }
-
-        vm.test = `Rotate x:${this.el.object3D.rotation.x
-          .toString()
-          .substring(
-            0,
-            4
-          )} y:${this.el.object3D.rotation.y.toString().substring(0, 4)} `;
-        // `position` is a three.js Vector3.
-        // console.log(this.el.object3D.position);
-      },
-    });
 
     function bind(fn, ctx /* , arg1, arg2 */) {
       return (function(prependedArgs) {
@@ -484,6 +459,7 @@ export default {
         } else {
           yawObject.rotation.y += movementX * 0.002 * direction;
         }
+
         pitchObject.rotation.x += movementY * 0.002 * direction;
         pitchObject.rotation.x = Math.max(
           -PI_2,
@@ -573,7 +549,9 @@ export default {
         var direction;
         var canvas = this.el.sceneEl.canvas;
         var deltaY;
+        var deltaX;
         var yawObject = this.yawObject;
+        var pitchObject = this.pitchObject;
 
         if (!this.touchStarted || !this.data.touchEnabled) {
           return;
@@ -582,16 +560,27 @@ export default {
         deltaY =
           (2 * Math.PI * (evt.touches[0].pageX - this.touchStart.x)) /
           canvas.clientWidth;
+        deltaX =
+          (2 * Math.PI * (evt.touches[0].pageY - this.touchStart.y)) /
+          canvas.clientHeight;
+        console.log('deltaX:', deltaX);
 
         direction = this.data.reverseTouchDrag ? 1 : -1;
         // Limit touch orientaion to to yaw (y axis).
-        if (yawObject.rotation.y - deltaY * 0.5 * direction < -0.5) {
-          yawObject.rotation.y = -0.5;
-        } else if (yawObject.rotation.y - deltaY * 0.5 * direction > 0.5) {
-          yawObject.rotation.y = 0.5;
+        if (yawObject.rotation.y - deltaY * 0.8 * direction < -0.8) {
+          yawObject.rotation.y = -0.8;
+        } else if (yawObject.rotation.y - deltaY * 0.8 * direction > 0.8) {
+          yawObject.rotation.y = 0.8;
         } else {
-          yawObject.rotation.y -= deltaY * 0.5 * direction;
+          yawObject.rotation.y -= deltaY * 0.8 * direction;
         }
+
+        pitchObject.rotation.x += deltaX * 0.8 * direction;
+        pitchObject.rotation.x = Math.max(
+          -PI_2,
+          Math.min(PI_2, pitchObject.rotation.x)
+        );
+
         this.touchStart = {
           x: evt.touches[0].pageX,
           y: evt.touches[0].pageY,
@@ -816,13 +805,14 @@ canvas {
 
 .sceneStyle {
   margin: 10px;
+  height: initial !important;
   box-sizing: border-box;
   border-radius: 10px;
 }
 .demoPage {
   height: 90vh;
   position: relative;
-  padding: 0vw 1vw 2vw 1vw;
+  padding: 0vw 1vw 1vw 1vw;
   box-sizing: border-box;
   display: flex;
 }
