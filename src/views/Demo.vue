@@ -121,7 +121,7 @@ export default {
 
         // limiting the zoom
         if (finalZoom < 0.8) finalZoom = 0.8;
-        if (finalZoom > 1.8) finalZoom = 1.8;
+        if (finalZoom > 2) finalZoom = 2;
         this.zoom = finalZoom;
       });
 
@@ -609,7 +609,7 @@ export default {
 
             // limiting the zoom
             if (finalZoom < 0.8) finalZoom = 0.8;
-            if (finalZoom > 1.6) finalZoom = 1.6;
+            if (finalZoom > 1.8) finalZoom = 1.8;
             vm.test1 = vm.pintchDelta;
             vm.zoom = finalZoom;
             return;
