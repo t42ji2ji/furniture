@@ -2,16 +2,19 @@
 div(id="app")
   div(id="nav")
     .logo
-      img(src="./assets/logoDesign.png")
-      h3(contenteditable="true") 精品
-    .navbar
-      //- router-link(to="/") 關於公司
-      router-link(to="/demo") 精品Demo
-      //- router-link(to="/product") 產品資訊
-      //- router-link(to="/case") 實績案例
-      //- router-link(to="/aFrame") 360觀看
-      //- router-link(to="/three") 3d模型
-      //- router-link(to="/nav") 目錄下載
+      img(src="./assets/demo/logo/logo.png")
+    .logo
+      img(src="./assets/demo/logo/banner.png")
+    .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
+      
+    //- .navbar
+    //-   //- router-link(to="/") 關於公司
+    //-   router-link(to="/demo") 精品Demo
+    //-   //- router-link(to="/product") 產品資訊
+    //-   //- router-link(to="/case") 實績案例
+    //-   //- router-link(to="/aFrame") 360觀看
+    //-   //- router-link(to="/three") 3d模型
+    //-   //- router-link(to="/nav") 目錄下載
   router-view
 </template>
 
@@ -40,13 +43,11 @@ body {
 .logo {
   display: flex;
   align-items: center;
+  position: relative;
+  height: 100%;
   img {
-    margin-right: 10px;
-    height: 29px;
+    height: 100%;
     object-fit: cover;
-  }
-  h3 {
-    margin: 0;
   }
 }
 
@@ -54,7 +55,7 @@ body {
   display: flex;
   align-items: center;
   height: 10vh;
-  padding: 20px 30px;
+  padding: 10px 10px;
   justify-content: space-between;
   box-sizing: border-box;
   .navbar {
@@ -81,5 +82,11 @@ body {
 .fade-leave-active {
   opacity: 0;
   height: 0px;
+}
+.txt {
+  font-size: 12px;
+  max-width: 200px;
+  text-align: right;
+  color: #8a309e;
 }
 </style>

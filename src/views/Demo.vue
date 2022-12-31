@@ -2,30 +2,30 @@
 .demoPage
   .outer(:class="{hideDrawer: hideDrawer}")
     .tabs
-      .tab(:class="{ activeColor: selectedRoom == '臥室'}") 臥室
-      .tab(style="opacity:0.3" :class="{ activeColor: selectedRoom == '客廳'}") 客廳
-      .tab(style="opacity:0.3" :class="{ activeColor: selectedRoom == '廚房'}") 廚房
+      .tab(@click="selectedRoom='臥室'" :class="{ activeColor: selectedRoom == '臥室'}") 臥室
+      .tab(@click="selectedRoom='客廳'"  :class="{ activeColor: selectedRoom == '客廳'}") 客廳
+      .tab(@click="selectedRoom='廚房'"  :class="{ activeColor: selectedRoom == '廚房'}") 廚房
+    .box(style="height:5px")
     .tabs
       .tab(@click="selectStyleTab('style')"  :class="{ activeTab: selectedStyleTab == 'style'}") 版型
       .tab(@click="selectStyleTab('texture')"  :class="{ activeTab: selectedStyleTab == 'texture'}") 色號
-    .drawer
+    .drawer 
       .grid
         .textImg(v-for="style in styles")
-          .img(@click="selectStyle(style)" :class="{ active: choosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.jpg`) +')'}")
+          .img(@click="selectStyle(style)" :class="{ active: choosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.png`) +')'}")
           .text {{style}}
       .w(style="width:10px")
       .grid.gridRight
         .textImg(v-for="texture in textures")
           .img(@click="selectTexture(texture)" :class="{ active: choosenTexture(texture)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/texture/${texture}.jpg`) +')'}"  )
           .text {{texture}}
-      //- .activeBorder(:class="{ active: choosenTextureStyle(texture)}")
-  //- .bigImg(v-if="selectedTexture && selectedStyle" :style="{backgroundImage: 'url('+ require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`) +')'}"  )
   a-scene.sceneStyle(@mouseenter="inScene = true"
     @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
-    a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
+    a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
     a-entity(id="rig" position="25 10 0" rotation="0 90 0")
       a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
     .monitor 
+      .preview(:style="{backgroundImage: 'url('+ require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`) +')'}")
       .text 版型：{{selectedStyle}}
       .text 色號：{{selectedTexture}}
       .text.drawerBtn(@click="hideDrawer = !hideDrawer;init()") {{hideDrawer ?'顯示側欄':'隱藏側欄'}}
@@ -61,11 +61,11 @@ export default {
         'U3',
         'U4',
         'U5',
-        'M7',
         'M8',
         'W',
         'X6',
         'X6-1',
+        'X7',
       ],
       textures: [
         'U10',
@@ -851,6 +851,15 @@ canvas {
   border-radius: 10px;
 }
 
+.preview {
+  height: 120px;
+  width: 100px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+}
+
 .tabs {
   display: flex;
   width: 100%;
@@ -859,12 +868,16 @@ canvas {
     text-align: center;
     padding: 10px 0;
     cursor: pointer;
+    color: rgb(143, 143, 143);
     &.activeTab {
-      border: 1px solid rgb(156, 156, 156);
       border-radius: 5px;
-      background-color: #f5f5f5;
+      background-color: #6221c3;
+      color: rgb(255, 255, 255);
     }
     &.activeColor {
+      border-radius: 5px;
+      background-color: #2c3daf;
+      color: rgb(255, 255, 255);
     }
   }
 }
