@@ -3,7 +3,7 @@ div(id="app")
   div(id="nav")
     .logo
       img(src="./assets/demo/logo/logo.png")
-    .logo
+    .logo.hide
       img(src="./assets/demo/logo/banner.png")
     .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
       
@@ -88,5 +88,14 @@ body {
   max-width: 200px;
   text-align: right;
   color: #8a309e;
+}
+// hide on mobile device
+@media screen and (max-width: 768px) {
+  .hide {
+    display: none;
+  }
+  .logo {
+    height: 80%;
+  }
 }
 </style>
