@@ -12,38 +12,51 @@
     .drawer 
       .grid
         .textImg(v-for="style in styles")
-          .img(@click="selectStyle(style)" :class="{ active: choosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.png`) +')'}")
+          .img(@click="selectStyle(style)" :class="{ active: chosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.png`) +')'}")
           .text {{style}}
       .w(style="width:10px")
       .grid.gridRight
         .textImg(v-for="texture in textures")
-          .img(@click="selectTexture(texture)" :class="{ active: choosenTexture(texture)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/texture/${texture}.jpg`) +')'}"  )
+          .img(@click="selectTexture(texture)" :class="{ active: chosenTexture(texture)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/texture/${texture}.jpg`) +')'}"  )
           .text {{texture}}
-  a-scene.sceneStyle(@mouseenter="inScene = true"
-    @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
-    a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
-    a-entity(id="rig" position="25 10 0" rotation="0 90 0")
-      a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
+  .x(style="width:100%;height:100%;position='relative'")
+    a-scene(@mouseenter="inScene = true"
+      @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
+      //- a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
+      a-sky(:src="`${prefixUrl}${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`")
+      a-entity(id="rig" position="25 10 0" rotation="0 90 0")
+        a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
     .monitor 
-      .preview(:style="{backgroundImage: 'url('+ require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`) +')'}")
+      //- .preview(:style="{backgroundImage: 'url('+ require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`) +')'}")
+      div(style="width:100px;height:120px")
+        ZoomImage(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)',
+                  class="zoom-image"
+                  :options="{paneContainer: '#zoomContainer' ,inlinePane: false, zoomFactor:2}"
+                )
+        .absolute#zoomContainer.w-full.h-full.z-50.pointer-events-none
       .text 版型：{{selectedStyle}}
       .text 色號：{{selectedTexture}}
       .text.drawerBtn(@click="hideDrawer = !hideDrawer;init()") {{hideDrawer ?'顯示側欄':'隱藏側欄'}}
 </template>
 
 <script>
-import * as THREEJ from 'aframe';
-
+import * as THREEJS from 'aframe';
+import ZoomImage from '../components/ZoomImage.vue';
 export default {
+  components: {
+    ZoomImage,
+  },
   name: 'Demo',
   data() {
     return {
+      prefixUrl:
+        'https://media.githubusercontent.com/media/t42ji2ji/furniture_photo/main/',
       selectedTexture: 'U10',
       hideDrawer: false,
       inScene: true,
       selectedStyle: 'W',
       zoom: 1,
-      pintchDelta: 0,
+      pinchDelta: 0,
       selectedStyleTab: 'style',
       selectedRoom: '臥室',
       test: '',
@@ -106,7 +119,7 @@ export default {
   },
   methods: {
     init() {
-      THREEJ;
+      THREEJS;
       const AFRAME = window.AFRAME;
       const THREE = window.THREE;
       var vm = this;
@@ -222,7 +235,7 @@ export default {
             this.updateGrabCursor(data.enabled);
           }
 
-          // Reset magic window eulers if tracking is disabled.
+          // Reset magic window e-rulers if tracking is disabled.
           if (
             oldData &&
             !data.magicWindowTrackingEnabled &&
@@ -598,19 +611,19 @@ export default {
                 event.touches[0].pageY - event.touches[1].pageY
               );
             };
-            if (vm.pintchDelta == 0) {
-              vm.pintchDelta = distance(evt);
+            if (vm.pinchDelta == 0) {
+              vm.pinchDelta = distance(evt);
               return;
             }
             evt.preventDefault(); // Prevent page scroll
 
             var delta = distance(evt);
-            var finalZoom = vm.zoom + (delta - vm.pintchDelta) / 100 / 30;
+            var finalZoom = vm.zoom + (delta - vm.pinchDelta) / 100 / 30;
 
             // limiting the zoom
             if (finalZoom < 0.8) finalZoom = 0.8;
             if (finalZoom > 1.8) finalZoom = 1.8;
-            vm.test1 = vm.pintchDelta;
+            vm.test1 = vm.pinchDelta;
             vm.zoom = finalZoom;
             return;
           }
@@ -651,8 +664,8 @@ export default {
          */
         onTouchEnd: function() {
           this.touchStarted = false;
-          vm.pintchDelta = 0;
-          vm.test1 = vm.pintchDelta;
+          vm.pinchDelta = 0;
+          vm.test1 = vm.pinchDelta;
         },
 
         /**
@@ -774,9 +787,9 @@ export default {
     selectStyleTab(tabName) {
       this.selectedStyleTab = tabName;
       if (tabName == 'texture') {
-        this.moveTotexture();
+        this.moveToTexture();
       } else {
-        this.moveTotexture(-1);
+        this.moveToTexture(-1);
       }
     },
     selectTexture(texture) {
@@ -785,21 +798,21 @@ export default {
     selectStyle(style) {
       this.selectedStyle = style;
     },
-    choosenTexture(texture) {
+    chosenTexture(texture) {
       if (this.selectedTexture === texture) {
         return true;
       } else {
         return false;
       }
     },
-    choosenStyle(style) {
+    chosenStyle(style) {
       if (this.selectedStyle === style) {
         return true;
       } else {
         return false;
       }
     },
-    moveTotexture(dis) {
+    moveToTexture(dis) {
       var tg = document.querySelector('.drawer');
       if (dis == -1) {
         tg.style.WebkitTransform = `translateX(0px)`;
@@ -957,7 +970,6 @@ canvas {
   text-align: left;
   font-size: 0.8rem;
   top: 0;
-  left: 0;
   background-color: #aeaeae6d;
   z-index: 100;
   padding: 0.5rem;
@@ -975,5 +987,10 @@ canvas {
   &:hover {
     background-color: #aeaeae;
   }
+}
+
+a-scene {
+  width: 100%;
+  height: 100%;
 }
 </style>
