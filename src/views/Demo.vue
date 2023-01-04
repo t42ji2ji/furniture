@@ -196,35 +196,34 @@ export default {
         },
 
         setupMagicWindowControls: function() {
-          var magicWindowControls;
-          var data = this.data;
-
+          // var magicWindowControls;
+          // var data = this.data;
           // Only on mobile devices and only enabled if DeviceOrientation permission has been granted.
-          if (vm.isMobile() || vm.isMobileDeviceRequestingDesktopSite()) {
-            magicWindowControls = this.magicWindowControls = new THREE.DeviceOrientationControls(
-              this.magicWindowObject
-            );
-            if (
-              typeof DeviceOrientationEvent !== 'undefined' &&
-              DeviceOrientationEvent.requestPermission
-            ) {
-              magicWindowControls.enabled = false;
-              if (
-                this.el.sceneEl.components['device-orientation-permission-ui']
-                  .permissionGranted
-              ) {
-                magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-              } else {
-                this.el.sceneEl.addEventListener(
-                  'deviceorientationpermissiongranted',
-                  function() {
-                    magicWindowControls.enabled =
-                      data.magicWindowTrackingEnabled;
-                  }
-                );
-              }
-            }
-          }
+          //   if (vm.isMobile() || vm.isMobileDeviceRequestingDesktopSite()) {
+          //     magicWindowControls = this.magicWindowControls = new THREE.DeviceOrientationControls(
+          //       this.magicWindowObject
+          //     );
+          //     if (
+          //       typeof DeviceOrientationEvent !== 'undefined' &&
+          //       DeviceOrientationEvent.requestPermission
+          //     ) {
+          //       magicWindowControls.enabled = false;
+          //       if (
+          //         this.el.sceneEl.components['device-orientation-permission-ui']
+          //           .permissionGranted
+          //       ) {
+          //         magicWindowControls.enabled = data.magicWindowTrackingEnabled;
+          //       } else {
+          //         this.el.sceneEl.addEventListener(
+          //           'deviceorientationpermissiongranted',
+          //           function() {
+          //             magicWindowControls.enabled =
+          //               data.magicWindowTrackingEnabled;
+          //           }
+          //         );
+          //       }
+          //     }
+          //   }
         },
 
         update: function(oldData) {
@@ -830,6 +829,11 @@ export default {
           userAgent
         );
       }
+      function isAndroid() {
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf('android') > -1; //&& ua.indexOf("mobile");
+        return /Android/.test(window.navigator.userAgent) || isAndroid;
+      }
       function isR7() {
         return /R7 Build/.test(window.navigator.userAgent);
       }
@@ -846,7 +850,7 @@ export default {
         ) {
           _isMobile = true;
         }
-        if (isIOS() || isTablet() || isR7()) {
+        if (isIOS() || isTablet() || isR7() || isAndroid()) {
           _isMobile = true;
         }
       })(window.navigator.userAgent || window.navigator.vendor || window.opera);
