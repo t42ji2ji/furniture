@@ -21,8 +21,7 @@
           .text {{texture}}
   .x(style="width:100%;height:100%;position='relative'")
     a-scene(@mouseenter="inScene = true"
-      @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" renderer="antialias: true" embedded=true v-if="selectedTexture && selectedStyle")
-      //- a-sky(:src="require(`../assets/demo/render/${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`)" )
+      @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" :vr-mode-ui="`enabled: ${vrMode}`" embedded=true v-if="selectedTexture && selectedStyle")
       a-sky(:src="`${prefixUrl}${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`")
       a-entity(id="rig" position="25 10 0" rotation="0 90 0")
         a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
@@ -47,6 +46,12 @@ export default {
     ZoomImage,
   },
   name: 'Demo',
+  props: {
+    vrMode: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       prefixUrl:
