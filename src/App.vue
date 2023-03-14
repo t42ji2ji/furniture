@@ -47,8 +47,9 @@ body {
   position: relative;
   height: 100%;
   img {
+    max-width: 300px;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
