@@ -1,10 +1,10 @@
 <template lang="pug">
 div(id="app")
   div(id="nav")
-    .logo
-      img(src="./assets/demo/logo/logo.png")
     .logo.hide
       img(src="./assets/demo/logo/banner.png")
+    .logo
+      img(src="./assets/demo/logo/logo.png")
     .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
       
     //- .navbar
@@ -47,7 +47,7 @@ body {
   position: relative;
   height: 100%;
   img {
-    max-width: 300px;
+    max-width: 280px;
     height: 100%;
     object-fit: contain;
   }
