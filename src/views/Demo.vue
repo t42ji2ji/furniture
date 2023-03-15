@@ -12,7 +12,7 @@
     .drawer 
       .grid
         .textImg(v-for="style in styles")
-          .img(@click="selectStyle(style)" :class="{ active: chosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.png`) +')'}")
+          .img(@click="selectStyle(style)" :class="{ active: chosenStyle(style)}" :style="{backgroundImage: 'url('+ require(`../assets/demo/style/${style}.jpg`) +')'}")
           .text {{style}}
       .w(style="width:10px")
       .grid.gridRight

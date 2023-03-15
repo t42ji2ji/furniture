@@ -5,7 +5,8 @@ div(id="app")
       img(src="./assets/demo/logo/banner.png")
     .logo
       img(src="./assets/demo/logo/logo.png")
-    .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
+    .logo.hide(style="justify-content: flex-end;")
+      .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
       
     //- .navbar
     //-   //- router-link(to="/") 關於公司
@@ -16,6 +17,7 @@ div(id="app")
     //-   //- router-link(to="/three") 3d模型
     //-   //- router-link(to="/nav") 目錄下載
   router-view
+  .txt1.unhide(style="width:100%") 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
 </template>
 
 <style lang="scss">
@@ -46,8 +48,10 @@ body {
   align-items: center;
   position: relative;
   height: 100%;
+  .txt {
+    text-align: end;
+  }
   img {
-    max-width: 280px;
     height: 100%;
     object-fit: contain;
   }
@@ -91,10 +95,19 @@ body {
   text-align: right;
   color: #8a309e;
 }
+.txt1 {
+  font-size: 12px;
+  text-align: center;
+  color: #8a309e;
+  display: none;
+}
 // hide on mobile device
 @media screen and (max-width: 768px) {
   .hide {
     display: none;
+  }
+  .unhide {
+    display: block;
   }
   .logo {
     height: 80%;
