@@ -1,10 +1,10 @@
 <template lang="pug">
 div(id="app")
   div(id="nav")
-    .logo.hide
-      img(src="./assets/demo/logo/banner.png")
-    .logo
-      img(src="./assets/demo/logo/logo.png")
+    .logo.hide(@click="openUrl")
+      img(src="./assets/demo/logo/banner.jpg")
+    .logo(@click="openUrl")
+      img(src="./assets/demo/logo/logo.jpg" )
     .logo.hide(style="justify-content: flex-end;")
       .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
       
@@ -19,6 +19,20 @@ div(id="app")
   router-view
   .txt1.unhide(style="width:100%") 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
 </template>
+
+<script>
+export default {
+  name: 'App',
+  methods: {
+    openUrl() {
+      window.open(
+        'https://www.syuanhuang.com.tw/products_detail/252',
+        '_blank'
+      );
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 html,
