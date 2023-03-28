@@ -1,9 +1,9 @@
 <template lang="pug">
 div(id="app")
   div(id="nav")
-    .logo.hide(@click="openUrl")
+    .logo.hide.c(@click="openUrl")
       img(src="./assets/demo/logo/banner.jpg")
-    .logo(@click="openUrl")
+    .logo.c(@click="openUrl")
       img(src="./assets/demo/logo/logo.jpg" )
     .logo.hide(style="justify-content: flex-end;")
       .txt 因電子設備呈現之差異，本網站內容之顏色、圖片、文字等，僅供參考，實際以色卡為準。
@@ -55,7 +55,9 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
-
+.c {
+  cursor: pointer;
+}
 .logo {
   flex: 1;
   display: flex;
