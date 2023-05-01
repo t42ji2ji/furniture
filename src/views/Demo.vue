@@ -26,13 +26,20 @@
       a-entity(id="rig" position="25 10 0" rotation="0 90 0")
         a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
     .monitor 
+      .spec-preview
+        img(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)', alt="" style="width:100px;height:120px")
+        .event(@mousemove="handler")
+        .big
+         img(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)', alt="", ref="big")
+        //- 遮罩层
+        .mask(ref="mask")
       //- .preview(:style="{backgroundImage: 'url('+ require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`) +')'}")
-      div(style="width:100px;height:120px")
-        ZoomImage(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)',
-                  class="zoom-image"
-                  :options="{paneContainer: '#zoomContainer' ,inlinePane: false, zoomFactor:2}"
-                )
-        .absolute#zoomContainer.w-full.h-full.z-50.pointer-events-none
+      //- div(style="width:100px;height:120px")
+      //-   ZoomImage(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)',
+      //-             class="zoom-image"
+      //-             :options="{paneContainer: '#zoomContainer' ,inlinePane: false, zoomFactor:2}"
+      //-           )
+      //-   .absolute#zoomContainer.w-full.h-full.z-50.pointer-events-none
       .text 版型：{{selectedStyle}}
       .text 色號：{{selectedTexture}}
       .text.drawerBtn(@click="hideDrawer = !hideDrawer;init()") {{hideDrawer ?'顯示側欄':'隱藏側欄'}}
@@ -84,9 +91,9 @@ export default {
         'X6',
         'X6-1',
         'X7',
-        'v1',
-        'v2',
-        'v3',
+        'V1',
+        'V2',
+        'V3',
       ],
       textures: [
         'U10',
@@ -126,6 +133,26 @@ export default {
     this.init();
   },
   methods: {
+    handler(event) {
+      let mask = this.$refs.mask;
+      let bigImg = this.$refs.big;
+      // 遮罩层可移动的范围：鼠标的当前坐标到该元素的距离（左侧、顶部）减去 遮罩层宽、高的一半(遮罩层是一个以鼠标为中心的正方形)
+      let left = event.offsetX - mask.offsetWidth / 2;
+      let top = event.offsetY - mask.offsetHeight / 2;
+
+      // 约束遮罩层可移动的范围
+      if (left <= 0) left = 0;
+      if (left >= mask.offsetWidth) left = mask.offsetWidth;
+      if (top <= 0) top = 0;
+      if (top >= mask.offsetHeight) top = mask.offsetHeight;
+
+      // 修改元素的left|top属性值
+      mask.style.left = left + 'px';
+      mask.style.top = top + 'px';
+      bigImg.style.left = -2 * left + 'px';
+      bigImg.style.top = -2 * top + 'px';
+    },
+
     init() {
       THREEJS;
       const AFRAME = window.AFRAME;
@@ -1004,5 +1031,59 @@ canvas {
 a-scene {
   width: 100%;
   height: 100%;
+}
+
+.spec-preview {
+  position: relative;
+  width: 100px;
+  height: 120px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .event {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 998;
+  }
+
+  .mask {
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 255, 0, 0.3);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+  }
+
+  .big {
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: -1px;
+    left: 120%;
+    overflow: hidden;
+    z-index: 998;
+    display: none;
+    background: rgba(0, 0, 0, 0.268);
+    img {
+      width: 200%;
+      max-width: 150%;
+      height: 150%;
+      position: absolute;
+      object-fit: contain;
+      left: 0;
+      top: 0;
+    }
+  }
+  .event:hover ~ .mask,
+  .event:hover ~ .big {
+    display: block;
+  }
 }
 </style>

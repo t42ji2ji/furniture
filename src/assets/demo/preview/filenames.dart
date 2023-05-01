@@ -513,6 +513,9 @@ final styleNames = [
   "U4",
   "W",
   "X6",
+  "V1",
+  "V2",
+  "V3",
 ];
 final textureNames = [
   "K01",
