@@ -84,6 +84,9 @@ export default {
         'X6',
         'X6-1',
         'X7',
+        'v1',
+        'v2',
+        'v3',
       ],
       textures: [
         'U10',
