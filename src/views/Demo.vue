@@ -30,7 +30,8 @@
         img(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)', alt="" style="width:100px;height:120px")
         .event(@mousemove="handler")
         .big
-         img(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)', alt="", ref="big")
+          .pd(ref="big" )
+            img(:src='require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`)', alt="", )
         //- 遮罩层
         .mask(ref="mask")
       //- .preview(:style="{backgroundImage: 'url('+ require(`../assets/demo/preview/${selectedStyle}+${selectedTexture}.jpg`) +')'}")
@@ -1037,6 +1038,7 @@ a-scene {
   position: relative;
   width: 100px;
   height: 120px;
+  padding: 10px 0px;
   img {
     width: 100%;
     height: 100%;
@@ -1071,14 +1073,21 @@ a-scene {
     z-index: 998;
     display: none;
     background: rgba(0, 0, 0, 0.268);
-    img {
-      width: 200%;
-      max-width: 150%;
+    .pd {
+      width: 150%;
       height: 150%;
       position: absolute;
       object-fit: contain;
       left: 0;
       top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 90%;
+        height: 90%;
+        object-fit: contain;
+      }
     }
   }
   .event:hover ~ .mask,
