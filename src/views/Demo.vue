@@ -23,7 +23,7 @@
     a-scene(@mouseenter="inScene = true"
       @mouseleave="inScene = false" device-orientation-permission-ui="enabled: false" :vr-mode-ui="`enabled: ${vrMode}`" embedded=true v-if="selectedTexture && selectedStyle")
       a-sky(:src="`${prefixUrl}${this.selectedStyle}/${this.selectedRoom}-${this.selectedStyle}_${this.selectedTexture}.jpg`")
-      a-entity(id="rig" position="25 10 0" rotation="0 90 0")
+      a-entity(id="rig" :position="cameraPosition" rotation="0 90 0")
         a-entity( id="camera" :camera="`zoom:${zoom}`" look-controls-o hand-tracking-controls)
     .monitor 
       .spec-preview
@@ -130,6 +130,9 @@ export default {
   computed: {
     renderUrl() {
       return `../assets/demo/render/${this.selectedStyle}/臥室-${this.selectedStyle}_${this.selectedTexture}.jpg`;
+    },
+    cameraPosition() {
+      return this.selectedRoom == '廚房' ? '80 10 0' : '25 10 0';
     },
   },
   mounted() {
@@ -529,22 +532,25 @@ export default {
 
           // Calculate rotation.
           direction = this.data.reverseMouseDrag ? 1 : -1;
-
-          if (yawObject.rotation.y + movementX * 0.002 * direction < -0.5) {
-            yawObject.rotation.y = -0.5;
+          var rotateLimitDegree = this.selectedRoom == '廚房' ? 0.5 : 0.88;
+          if (
+            yawObject.rotation.y + movementX * 0.002 * direction <
+            -rotateLimitDegree
+          ) {
+            yawObject.rotation.y = -rotateLimitDegree;
           } else if (
             yawObject.rotation.y + movementX * 0.002 * direction >
-            0.5
+            rotateLimitDegree
           ) {
-            yawObject.rotation.y = 0.5;
+            yawObject.rotation.y = rotateLimitDegree;
           } else {
             yawObject.rotation.y += movementX * 0.002 * direction;
           }
 
           pitchObject.rotation.x += movementY * 0.002 * direction;
           pitchObject.rotation.x = Math.max(
-            -PI_2,
-            Math.min(PI_2, pitchObject.rotation.x)
+            -PI_2 * 2,
+            Math.min(PI_2 * 2, pitchObject.rotation.x)
           );
         },
 
